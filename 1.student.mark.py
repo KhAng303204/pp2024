@@ -1,4 +1,4 @@
-#define function
+# Define functions
 def student_info():
     name = input("Enter student's name: ")
     id = input("Enter student's ID: ")
@@ -20,54 +20,56 @@ def list_courses(course_list):
     for course in course_list:
         print(course)
 
-#marking
 def marking(student_list, course_list):
+    # Display the list of courses to choose from
     list_courses(course_list)
-    chosen_course = int(input("Choose a course (Enter the course ID)"))
+    chosen_course = int(input("Choose a course (Enter the course ID): "))
 
-    #find the chosen  course
+    # Find the selected course
     selected = None
     for course in course_list:
-        if course['course ID'] == chosen_course:
+        if course['Course ID'] == chosen_course:
             selected = course
             break
+
+    # Check if the course ID is valid
     if selected is None:
         print("Invalid ID")
         return
 
-    print(f"Enter mark for the course: {selected['Course name']}")
-
-    #input mark
+    # Input marks for the selected course for each student
+    print(f"Enter marks for the course: {selected['Course name']}")
     for student in student_list:
-        mark = float(input(f"Enter mark for {student['Name']} in {selected['Course name']}")) 
-        student.setdefault('Courses', {}).setdefault(selected['Course name'], {})['Marks'] = mark
-        #setdefault('Courses', {}): check if the course exits in dics
-        #setdefault(selected['Course name'], {}): match the name of course
-        #['Marks'] = mark: marking the course
+        mark = float(input(f"Enter mark for {student['Name']} in {selected['Course name']}: "))
+        if 'Courses' not in student:
+            student['Courses'] = {}
+        student['Courses'].setdefault(selected['Course name'], {})['Marks'] = mark
 
 def show_mark(student_list, course_list):
+    # Display the list of courses to choose from
     list_courses(course_list)
-    chosen_course = int(input("Choose a course (Enter the course ID)"))
+    chosen_course = int(input("Choose a course (Enter the course ID): "))
 
-    #find the chosen  course
+    # Find the selected course
     selected = None
     for course in course_list:
-        if course['course ID'] == chosen_course:
+        if course['Course ID'] == chosen_course:
             selected = course
             break
+
+    # Check if the course ID is valid
     if selected is None:
         print("Invalid ID")
         return
 
+    # Display marks for the selected course for each student
     print(f"Showing marks for the course: {selected['Course name']}")
-
-    #Display the marks
     for student in student_list:
         if 'Courses' in student and selected['Course name'] in student['Courses']:
-             marks = student['Courses'][selected['Course name']].get('Marks', 'Marks not available')
-             print(f"Student: {student['Name']} - Marks: {marks}")
+            marks = student['Courses'][selected['Course name']].get('Marks', 'Marks not available')
+            print(f"Student: {student['Name']} - Marks: {marks}")
 
-#main
+# Main
 numberOfStudents = int(input("Enter number of students: "))
 studentARR = []
 for i in range(numberOfStudents):
